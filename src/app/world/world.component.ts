@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-world',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class WorldComponent implements OnInit {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     let svgPath = document.querySelectorAll<SVGPathElement>('path');
     Array.prototype.forEach.call(svgPath, (svgCount: SVGPathElement) => {
       svgCount.addEventListener('mouseover', (event: MouseEvent) => {
